@@ -18,7 +18,8 @@ readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + 
 const server = () => {
     db()
     app.listen(Port, () =>{
-        console.log('Listening to port: ', Port)
+        console.log('Listening to port: ', Port || 3000
+        )
     })
 }
 

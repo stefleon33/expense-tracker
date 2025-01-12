@@ -27,7 +27,7 @@ const incomeSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    descirption: {
+    description: {
         type: String,
         required: true,
         trim: true,

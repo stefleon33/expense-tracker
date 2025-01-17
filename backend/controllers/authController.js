@@ -1,9 +1,6 @@
-const jwtSecret = 'your_jwt_secret';
+const jwt = require('jsonwebtoken');
 
-const jwt = require('jsonwebtoken'),
-    passport = require('passport');
-
-require('../passport');
+const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
 
 const generateJWTToken = (user) => { 
     return jwt.sign(user, jwtSecret, {
@@ -11,7 +8,7 @@ const generateJWTToken = (user) => {
         expiresIn: '7d',
         algorithm: 'HS256'
     });
-}
+};
 
 module.exports = (router) => {
     router.post('/login', (req, res) => {
@@ -31,4 +28,6 @@ module.exports = (router) => {
             });
         })(req, res);
     });
-}
+}module.exports =  {
+    generateJWTToken
+};

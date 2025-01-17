@@ -1,5 +1,21 @@
+const { body, validationResult, param } = require('express-validator');
 const expenseSchema = require("../models/expenseModel")
 
+//Validation Middleware
+exports.validateExpense =[
+    body('title').notEmpty().withMessage('Title is required.'),
+    body('amount')
+        .isFloat({ gt: 0 })
+        .withMessage('Amount must be a positive number'),
+    body('category').notEmpty().withMessage('Category is required'),
+    body('description')
+        .notEmpty().withMessage('Description is required')
+        .isLength({ max: 40 })
+        .withMessage('Description must not exceed 40 characters'),
+    body('date').notEmpty().withMessage('Date is required').isISO8601().withMessage('Date must be YYYY-MM-DD')
+];
+
+//Add Expense
 exports.addExpense = async (req, res) => {
     const {title, amount, category, description, date} = req.body;
 
@@ -12,13 +28,6 @@ exports.addExpense = async (req, res) => {
     })
 
     try {
-        //validations
-        if(!title || !category || !description || !date){
-            return res.status(400).json({message: 'All fields are requried!'})
-        }
-        if(amount <=0 || !amount === 'number'){
-            return res.status(400).json({message: 'Amount must be a positive number!'})
-        }
         await expense.save()
         res.status(200).json({message: 'Expense added!'})
     } catch (error) {

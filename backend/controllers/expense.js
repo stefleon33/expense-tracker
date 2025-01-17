@@ -50,13 +50,26 @@ exports.getExpenses = async (req, res) => {
     }
 }
 
+//Delete Expense
+exports.validateDeleteExpense =[
+    param('id').isMongoId().withMessage('Invalid ID format')
+]
+
 exports.deleteExpense = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array() });
+    }
+
     const {id} = req.params;
-    expenseSchema.findByIdAndDelete(id)
-        .then((expense) => {
-            res.status(200).json({message: 'Expense Deleted'})
-        })
-        .catch ((err) =>{
-            res.status(500).json({message: 'Server Error'})
-        })
-}
+
+    try {
+        const expense = await expenseSchema.findByIdAndDelete(id);
+        if (!expense) {
+            return res.status(404).json({message: 'Expense not found! '});
+        }
+        res.status(200).json({message: 'Expense Deleted'});
+    } catch (error) {
+         res.status(500).json({message: 'Internal Server Error', error: error.message});
+        }
+};

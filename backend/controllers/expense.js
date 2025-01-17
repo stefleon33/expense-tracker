@@ -17,6 +17,11 @@ exports.validateExpense =[
 
 //Add Expense
 exports.addExpense = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array() });
+    }
+
     const {title, amount, category, description, date} = req.body;
 
     const expense = expenseSchema({
@@ -31,7 +36,7 @@ exports.addExpense = async (req, res) => {
         await expense.save()
         res.status(200).json({message: 'Expense added!'})
     } catch (error) {
-        res.status(500).json({message: 'Server Error'})
+        res.status(500).json({message: 'Internal Server Error', error: error.message})
     }
     console.log(expense)
 }

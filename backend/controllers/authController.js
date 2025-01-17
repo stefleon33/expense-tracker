@@ -11,6 +11,12 @@ const generateJWTToken = (user) => {
     });
 };
 
+const addToBlacklist = async (token) => {
+    const blacklistedToken = new Blacklist({ token });
+    await blacklistedToken.save();
+};
+
 module.exports =  {
-    generateJWTToken
+    generateJWTToken,
+    addToBlacklist
 };

@@ -13,10 +13,15 @@ exports.validateIncome =[
         .isLength({ max: 40 })
         .withMessage('Description must not exceed 40 characters'),
     body('date').notEmpty().withMessage('Date is required').isISO8601().withMessage('Date must be YYYY-MM-DD')
-]
+];
 
-
+//Add Income
 exports.addIncome = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array() });
+    }
+
     const {title, amount, category, description, date} = req.body;
 
     const income = incomeSchema({
@@ -28,13 +33,6 @@ exports.addIncome = async (req, res) => {
     })
 
     try {
-        //validations
-        if(!title || !category || !description || !date){
-            return res.status(400).json({message: 'All fields are requried!'})
-        }
-        if(amount <=0 || !amount === 'number'){
-            return res.status(400).json({message: 'Amount must be a positive number!'})
-        }
         await income.save()
         res.status(200).json({message: 'Income added!'})
     } catch (error) {

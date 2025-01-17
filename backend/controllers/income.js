@@ -1,4 +1,20 @@
+const { body, validationResult, param } = require('express-validator');
 const incomeSchema = require("../models/incomeModel")
+
+//Validation Middleware
+exports.validateIncome =[
+    body('title').notEmpty().withMessage('Title is required.'),
+    body('amount')
+        .isFloat({ gt: 0 })
+        .withMessage('Amount must be a positive number'),
+    body('category').notEmpty().withMessage('Category is required'),
+    body('description')
+        .notEmpty().withMessage('Description is required')
+        .isLength({ max: 40 })
+        .withMessage('Description must not exceed 40 characters'),
+    body('date').notEmpty().withMessage('Date is required').isISO8601().withMessage('Date must be YYYY-MM-DD')
+]
+
 
 exports.addIncome = async (req, res) => {
     const {title, amount, category, description, date} = req.body;

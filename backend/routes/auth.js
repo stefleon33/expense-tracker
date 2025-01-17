@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
         if (error || !user) {
             return res.status(400).json({
                 message: 'Authentication failed',
-                error,
+                error:  info?.message || 'Invalid credentials',
             });
         }
         req.login(user, { session: false }, (error) => {

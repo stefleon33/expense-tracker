@@ -1,5 +1,5 @@
 const { body, validationResult, param } = require('express-validator');
-const expenseSchema = require("../models/expenseModel")
+const expenseSchema = require("../models/expenseModel.cjs")
 
 //Validation Middleware
 exports.validateExpense =[

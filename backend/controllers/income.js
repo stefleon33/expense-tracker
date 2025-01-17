@@ -1,5 +1,5 @@
 const { body, validationResult, param } = require('express-validator');
-const incomeSchema = require("../models/incomeModel")
+const incomeSchema = require("../models/incomeModel.cjs")
 
 //Validation Middleware
 exports.validateIncome =[

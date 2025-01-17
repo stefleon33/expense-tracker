@@ -1,8 +1,10 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
-const User = require('../models/userModel');
+const User = require('../models/userModel.cjs');
 const { generateJWTToken } = require('../controllers/authController');
+const Blacklist = require('../models/blacklist.cjs');
+const verifyToken = require('./verifyToken.cjs');
 
 const router = express.Router();
 
@@ -43,22 +45,47 @@ router.post(
 );
 
 //Login Route
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
-        if (error || !user) {
+        if (error) {
             return res.status(400).json({
                 message: 'Authentication failed',
-                error:  info?.message || 'Invalid credentials',
+                error: error.message
             });
         }
+        if (!user) {
+            return res.status(400).json({
+                message: 'Invalid credentials',
+                error: info?.message || 'User not found'
+            });
+        }
+
         req.login(user, { session: false }, (error) => {
             if (error) {
                 return res.status(500).json({error: 'Login error', error: error.message });
             }
+
             const token = generateJWTToken(user.toJSON());
-            return res.status(200).json({ user, token });
+            return res.status(200).json({ message: 'Login successfully', user, token });
         });
-    })(req, res);
+    })(req, res, next);
+});
+
+//Logout Route
+router.post('/logout', verifyToken, async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(400).json({ message: 'No token provided' });
+        }
+
+        const blacklistedToken = new Blacklist({ token });
+        await blacklistedToken.save();
+
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Logout failed', error: error.message });
+    }
 });
 
 module.exports = router;

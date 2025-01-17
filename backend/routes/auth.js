@@ -16,7 +16,7 @@ router.post('/login', (req, res) => {
         }
         req.login(user, { session: false }, (error) => {
             if (error) {
-                return res.status(500).json({error: 'Login error', details: error});
+                return res.status(500).json({error: 'Login error', error: error.message });
             }
             const token = generateJWTToken(user.toJSON());
             return res.status(200).json({ user, token });
@@ -42,7 +42,7 @@ router.post('/register', async  (req, res) => {
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
-        res.status(500).json({ message: 'Registration failed', error });
+        res.status(500).json({ message: 'Registration failed', error: error.message });
     }
 });
 

@@ -9,6 +9,12 @@ function Incomes() {
         <IncomesStyled>
             <InnerLayout>
                 <h1>Incomes</h1>
+                <div className='incomes-content'>
+                    <div className='form-container'></div>
+                    <div className='incomes'>
+
+                    </div>
+                </div>
             </InnerLayout>
         </IncomesStyled>
     )

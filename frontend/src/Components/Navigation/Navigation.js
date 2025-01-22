@@ -50,7 +50,7 @@ const NavStyled = styled.nav`
     gap: 2rem;
     .user-con{
         height: 100px;
-        dispaly: flex;
+        display: flex;
         align-items: center;
         gap: 1rem;
         img{
@@ -84,6 +84,8 @@ const NavStyled = styled.nav`
             cursor: pointer;
             transition: all .4s ease-in-out;
             color: rgba(34, 34, 96, 0.6);
+            padding-left: 1rem;
+            position: relative;
             i{
                 color: rgba(34, 34, 96, 0.6);
                 font-size: 1.4rem;
@@ -91,11 +93,12 @@ const NavStyled = styled.nav`
             }
         }
     }
+
     .active{
         color: rgba(34, 34, 96, 1);
         i{
             color: rgba(34, 34, 96, 1);
-        }   
+        }
         &::before{
             content: "";
             position: absolute;

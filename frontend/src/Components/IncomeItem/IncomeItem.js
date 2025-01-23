@@ -84,7 +84,8 @@ function IncomeItem({
                         bg={'var(--primary-color'}
                         color={'#fff'}
                         iColor={'#fff'}
-                        hColor={'var(--color-green)'}
+                        hColor={'var(--color-green)'} 
+                        onClick={() => deleteItem(id)}
                     />
                 </div>
             </div>

@@ -37,6 +37,28 @@ function IncomeItem({
                 return ''
         }
     }
+
+    const expenseCatIcon = () => {
+        switch (category) {
+            case 'education':
+                return book;
+            case 'groceries':
+                return food;
+            case 'health':
+                return medical;
+            case 'subscriptions':
+                return tv;
+            case 'takeaways':
+                return takeaway;
+            case 'clothing':
+                return clothing;
+            case 'travelling':
+                return freelance;
+            case 'other':
+                return circle;
+            default:
+                return ''
+        }
     }
 
     return (

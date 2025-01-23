@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 import { plus } from '../../utils/Icons'
 
 function Form() {
-    const {addIncome} = useGlobalContext
+    const {addIncome, getIncomes } = useGlobalContext
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -25,6 +25,7 @@ function Form() {
     const handleSubmit = e => {
         e.preventDefault()
         addIncome(inputState)
+        getIncomes()
     }
 
     return (
@@ -34,7 +35,7 @@ function Form() {
                     type="text" 
                     value={title}
                     name={'title'}
-                    placeholder="Salary Title"
+                    placeholder="Income Label"
                     onChange={handleInput('title')}
                 />
             </div>
@@ -43,14 +44,14 @@ function Form() {
                     type="text" 
                     value={amount}
                     name={'amount'}
-                    placeholder="Salary Amount"
+                    placeholder="Amount"
                     onChange={handleInput('amount')}
                 />
             </div>
             <div className="input-control">
                 <DatePicker 
                     id="date"
-                    placeholderText="Enter a date" 
+                    placeholderText="Date" 
                     selected={date}
                     dateFormat="dd/MM/yyyy"
                     onChange={(date) => {

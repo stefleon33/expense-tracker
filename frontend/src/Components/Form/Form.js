@@ -102,7 +102,7 @@ const FormStyled = styled.form`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    input, textarea, select {
+    input, textarea, select{
         font-family: inherit;
         font-size: inherit;
         outline: none;
@@ -123,13 +123,14 @@ const FormStyled = styled.form`
             width: 100%;
         }
     }
+
     .selects{
         display: flex;
         justify-content: flex-end;
         select{
             color: rgba(34, 34, 96, 0.4);
             &:focus, &:active{
-                color: rgba(34, 34, 96, 1);          
+                color: rgba(34, 34, 96, 1);
             }
         }
     }
@@ -143,5 +144,4 @@ const FormStyled = styled.form`
         }
     }
 `;
-
 export default Form

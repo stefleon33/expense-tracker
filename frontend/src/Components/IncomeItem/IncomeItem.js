@@ -69,24 +69,26 @@ function IncomeItem({
             <div className='content'>
                 <h5>{title}</h5>
                 <div className='inner-content'>
-                    <p>{dollar} 45</p>
-                    <p>{calender} {date}</p>
-                    <p>
-                        {comment}
-                        {description}
-                    </p>
-                </div>
-                <div className='btn-con'>
-                    <Button
-                        icon={trash}
-                        bPad={'1rem'}
-                        bRad={'50%'}
-                        bg={'var(--primary-color'}
-                        color={'#fff'}
-                        iColor={'#fff'}
-                        hColor={'var(--color-green)'} 
-                        onClick={() => deleteItem(id)}
-                    />
+                    <div className='text'>
+                        <p>{dollar} 45</p>
+                        <p>{calender} {date}</p>
+                        <p>
+                            {comment}
+                            {description}
+                        </p>
+                    </div>
+                    <div className='btn-con'>
+                        <Button
+                            icon={trash}
+                            bPad={'1rem'}
+                            bRad={'50%'}
+                            bg={'var(--primary-color'}
+                            color={'#fff'}
+                            iColor={'#fff'}
+                            hColor={'var(--color-green)'} 
+                            onClick={() => deleteItem(id)}
+                        />
+                    </div>
                 </div>
             </div>
         </IncomeItemStyled>
@@ -121,7 +123,7 @@ const IncomeItemStyled =styled.div`
 
     .content{
         flex: 1;
-        dispaly: flex;
+        display: flex;
         flex-direction: column;
         gap: .2rem;
         h5{
@@ -141,12 +143,13 @@ const IncomeItemStyled =styled.div`
             }
         }
         .inner-content{
-            dispaly: flex;
+            display: flex;
             justify-content: space-between;
             align-items: center;
             .text{
                 display: flex;
                 align-items: center;
+                gap: 1.5rem;
                 .p{
                     display: flex;
                     align-items: center;

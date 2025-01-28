@@ -7,17 +7,19 @@ const GlobalContext = React.createContext()
 
 export const GlobalProvider = ({children}) => {
 
-    const [incomes, setIncomes] = useState([])
-    const [expenses, setExpenses] = useState([])
-    const [error, setError] = useState(null)
+    const [incomes, setIncomes] = useState([]);
+    const [expenses, setExpenses] = useState([]);
+    const [error, setError] = useState(null);
 
+    //Calculate incomes
     const addIncome = async (income) => {
-        const response = await axios.post(`${BASE_URL}add-income`, income)
-            .catch((err) =>{
-                setError(err.response.data.message)
-            })
-        getIncomes()
-    }
+        try {
+            const response = await axios.post(`${BASE_URL}add-income`, income)
+            getIncomes();
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to add expense");
+        }
+    };
 
     const getIncomes = async () => {
         const response = await axios.get(`${BASE_URL}get-incomes`)
@@ -38,7 +40,34 @@ export const GlobalProvider = ({children}) => {
         return totalIncome;
     }
 
-    console.log(totalIncome())
+    //Calculate expenses
+    const addExpense = async (expense) => {
+        try {
+            const response = await axios.post(`${BASE_URL}add-expense`, expense);
+            getExpenses();
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to add expense");
+        }
+    };
+
+    const getExpenses = async () => {
+        const response = await axios.get(`${BASE_URL}get-expenses`)
+        setExpenses(response.data)
+    }
+
+    const deleteExpense = async (id) => {
+        const res = await axios.delete(`${BASE_URL}delete-expense/${id}`)
+        getExpenses()
+    }
+
+    const totalExpenses = () => {
+        let totalExpenses = 0;
+        expenses.forEach((expense) => {
+            totalExpenses += expense.amount
+        })
+
+        return totalExpenses;
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -46,7 +75,12 @@ export const GlobalProvider = ({children}) => {
             getIncomes,
             incomes,
             deleteIncome,
-            totalIncome
+            totalIncome,
+            addExpense,
+            getExpenses,
+            expenses,
+            deleteExpense,
+            totalExpenses,
         }}>
             {children}
         </GlobalContext.Provider>

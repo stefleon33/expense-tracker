@@ -29,7 +29,8 @@ function Incomes() {
                                 id={_id}
                                 title={title}
                                 description={description}
-                                amount={amount} date={date}
+                                amount={amount} 
+                                date={date}
                                 category={category}
                                 indicatorColor="var(--color-green)"
                                 deleteItem={deleteIncome}

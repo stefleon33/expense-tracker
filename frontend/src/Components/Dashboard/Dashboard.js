@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layouts';
 import Chart from '../Chart/Chart';
+import History from '../History/History';
 import { dollar } from '../../utils/Icons'
 import { useGlobalContext } from '../../contexts/globalContext';
 
@@ -12,7 +13,7 @@ function Dashboard() {
         getIncomes()
         getExpenses()
     }, [])
-    
+
     return (
         <DashboardStyled>
             <InnerLayout>
@@ -40,6 +41,9 @@ function Dashboard() {
                                 </p>
                             </div>
                         </div>
+                    </div>
+                    <div className='history-con'>
+                        <History />
                     </div>
                 </div>
             </InnerLayout>

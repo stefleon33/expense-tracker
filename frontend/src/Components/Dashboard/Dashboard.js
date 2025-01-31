@@ -7,7 +7,7 @@ import { dollar } from '../../utils/Icons'
 import { useGlobalContext } from '../../contexts/globalContext';
 
 function Dashboard() {
-    const {totalExpenses, totalIncome, totalBalance, getIncomes, getExpenses} = useGlobalContext()
+    const {totalExpenses, totalIncome, totalBalance, getIncomes, getExpenses, incomes, expenses} = useGlobalContext()
     
     useEffect(() =>{
         getIncomes()
@@ -44,6 +44,24 @@ function Dashboard() {
                     </div>
                     <div className='history-con'>
                         <History />
+                        <h2 className='transaction-title'>Min<span>Income</span>Max</h2>
+                        <div className='transaction-item'>
+                            <p>
+                                {Math.min(...incomes.map(item => !item.amount <= 0 ? item.amount : 0))}
+                            </p>
+                            <p>
+                                {Math.max(...incomes.map(item => !item.amount <= 0 ? item.amount : 0))}
+                            </p>
+                        </div>
+                        <h2 className='transaction-title'>Min<span>Expense</span>Max</h2>
+                        <div className='transaction-item'>
+                            <p>
+                                {Math.min(...expenses.map(item => !item.amount <= 0 ? item.amount : 0))}
+                            </p>
+                            <p>
+                                {Math.max(...expenses.map(item => !item.amount <= 0 ? item.amount : 0))}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </InnerLayout>

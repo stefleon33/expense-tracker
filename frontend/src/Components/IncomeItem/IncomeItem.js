@@ -73,10 +73,7 @@ function IncomeItem({
                     <div className='text'>
                         <p>{dollar} {amount}</p>
                         <p>{calender} {dateFormat(date)}</p>
-                        <p>
-                            {comment}
-                            {description}
-                        </p>
+                        <p>{comment} {description}</p>
                     </div>
                     <div className='btn-con'>
                         <Button
